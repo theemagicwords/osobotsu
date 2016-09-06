@@ -7,3 +7,4 @@ History
 ++++++++++++++++++
 
 * Project initialized.
+* Travis-CI implemented.
