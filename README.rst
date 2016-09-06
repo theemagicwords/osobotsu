@@ -2,15 +2,11 @@
 Osobotsu
 =============================
 
-.. image:: https://badge.fury.io/py/osobotsu.png
-    :target: http://badge.fury.io/py/osobotsu
+.. image:: https://badge.fury.io/gh/theemagicwords%2Fosobotsu.svg
+    :target: https://badge.fury.io/gh/theemagicwords%2Fosobotsu
 
-.. image:: https://travis-ci.org/theemagicwords/osobotsu.png?branch=master
+.. image:: https://travis-ci.org/theemagicwords/osobotsu.png?branch=develop
     :target: https://travis-ci.org/theemagicwords/osobotsu
-
-.. image:: https://pypip.in/d/osobotsu/badge.png
-    :target: https://pypi.python.org/pypi/osobotsu
-
 
 a thing i guess
 

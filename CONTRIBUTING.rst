@@ -57,7 +57,7 @@ Get Started!
 Ready to contribute? Here's how to set up `osobotsu` for
 local development.
 
-1. Fork_ the `osobotsu` repo on GitHub.
+1. Fork the `osobotsu` repo on GitHub.
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/osobotsu.git
@@ -82,8 +82,6 @@ To get tox, just pip install it.
     $ git push origin name-of-your-bugfix-or-feature
 
 6. Submit a pull request through the GitHub website.
-
-.. _Fork: https://github.com/Nekroze/osobotsu/fork
 
 Pull Request Guidelines
 -----------------------
