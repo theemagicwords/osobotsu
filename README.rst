@@ -15,4 +15,5 @@ Features
 --------
 
 * TODO
-
+* TODO normalize character images to identical dimensions
+* TODO crop background out of character images
