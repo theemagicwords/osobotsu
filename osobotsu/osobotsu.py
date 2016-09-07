@@ -3,16 +3,39 @@
 osobotsu.py - A comic generator
 """
 
+import sys
+import argparse
+import logging
 import os
 import random
-import argparse
 from PIL import Image, ImageDraw, ImageFont
 
-parser = argparse.ArgumentParser(description='Hustle, hustle!  Muscle, muscle!')
-parser.add_argument('-c', '--character', help='Specify a character name', required=False)
-parser.add_argument('-l', '--list', help='List all character images', action='store_true', required=False)
-parser.add_argument('-s', '--save', help='Generate and save an image', action='store_true', required=False)
-args = parser.parse_args()
+
+# Gather our code in a main() function
+def main(args, loglevel):
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=loglevel)
+
+    if args.character:
+        logging.info("Searching for character: ")
+        if os.path.isfile("./chars/" + args.character + ".png"):
+            character = "Found character " + args.character + ".png"
+        else:
+            character = "Sorry, could not find " + args.character
+    else:
+        # pick a random character
+        logging.info("No character specified, choosing random: ")
+        character = random.choice(os.listdir("chars/"))
+
+    logging.info(character)
+
+    if args.list:
+        for image in os.listdir("chars/"):
+            im = Image.open("chars/" + image)
+            logging.info(im.size)
+
+    if args.save:
+        sys.exit(comic())
+
 
 def comic():
     chars = ('ichimatsu', 'osomatsu')
@@ -41,6 +64,7 @@ def comic():
     # Return link to private URL location
     return 'output/' + fname
 
+
 def wrap(st, font, draw, width):
     st = st.split()
     mw = 0
@@ -57,7 +81,8 @@ def wrap(st, font, draw, width):
             else:
                 s += 1
 
-        if s == 0 and len(st) > 0:  # we've hit a case where the current line is wider than the screen
+        # we've hit a case where the current line is wider than the screen
+        if s == 0 and len(st) > 0:
             s = 1
 
         w, h = draw.textsize(" ".join(st[:s]), font=font)
@@ -116,12 +141,14 @@ def make_comic(chars, panels):
         pim.paste(bg, (0, 0))
         draw = ImageDraw.Draw(pim)
 
-        st1w = 0; st1h = 0; st2w = 0; st2h = 0
         (st1, (st1w, st1h)) = wrap(panels[i][0][1], font, draw, 2*panelwidth/3.0)
         rendertext(st1, font, draw, (10, 10))
+
         if len(panels[i]) == 2:
             (st2, (st2w, st2h)) = wrap(panels[i][1][1], font, draw, 2*panelwidth/3.0)
             rendertext(st2, font, draw, (panelwidth-10-st2w, st1h + 10))
+        else:
+            st2h = 0
 
         texth = st1h + 10
         if st2h > 0:
@@ -136,34 +163,46 @@ def make_comic(chars, panels):
             im2 = im2.transpose(Image.FLIP_LEFT_RIGHT)
             pim.paste(im2, (panelwidth-im2.size[0]-10, panelheight-im2.size[1]), im2)
 
-        draw.line([(0, 0), (0, panelheight-1), (panelwidth-1, panelheight-1), (panelwidth-1, 0), (0, 0)], (0, 0, 0, 0xff))
+        draw.line(
+            [(0, 0), (0, panelheight-1), (panelwidth-1, panelheight-1), (panelwidth-1, 0), (0, 0)],
+            (0, 0, 0, 0xff))
         del draw
         im.paste(pim, (0, panelheight * i))
 
     return im
 
 
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(
+        description="Hustle, hustle!  Muscle, muscle!")
+    parser.add_argument(
+        "-c",
+        "--character",
+        help="Specify a character name",
+        required=False)
+    parser.add_argument(
+        "-l",
+        "--list",
+        help="List all character images",
+        action="store_true",
+        required=False)
+    parser.add_argument(
+        "-s",
+        "--save",
+        help="Generate and save an image",
+        action="store_true",
+        required=False)
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        help="increase output verbosity",
+        action="store_true")
+    args = parser.parse_args()
 
-if args.character:
-    print("Searching for character: ")
-    if os.path.isfile("./chars/" + args.character + ".png"):
-        character = "Found character " + args.character + ".png"
+    # Setup logging
+    if args.verbose:
+        loglevel = logging.DEBUG
     else:
-        character = "Sorry, could not find " + args.character
-else:
-    # pick a random character
-    print("No character specified, choosing random: ")
-    character = random.choice(os.listdir("chars/"))
+        loglevel = logging.INFO
 
-print(character)
-
-if args.list:
-    for image in os.listdir("chars/"):
-        im = Image.open("chars/" + image)
-        print(im.size)
-
-if args.save:
-    print(comic())
-
-#TODO normalize character images to identical dimensions
-#TODO crop background out of character images
+    main(args, loglevel)
