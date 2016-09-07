@@ -2,15 +2,11 @@
 Osobotsu
 =============================
 
-.. image:: https://badge.fury.io/py/osobotsu.png
-    :target: http://badge.fury.io/py/osobotsu
+.. image:: https://badge.fury.io/gh/theemagicwords%2Fosobotsu.svg
+    :target: https://badge.fury.io/gh/theemagicwords%2Fosobotsu
 
 .. image:: https://travis-ci.org/theemagicwords/osobotsu.png?branch=master
     :target: https://travis-ci.org/theemagicwords/osobotsu
-
-.. image:: https://pypip.in/d/osobotsu/badge.png
-    :target: https://pypi.python.org/pypi/osobotsu
-
 
 a thing i guess
 
@@ -19,4 +15,5 @@ Features
 --------
 
 * TODO
-
+* TODO normalize character images to identical dimensions
+* TODO crop background out of character images
